@@ -1,7 +1,5 @@
 <script setup lang="ts">
 // Design page as index page (home page)
-
-console.log("index page");
 </script>
 
 <template>

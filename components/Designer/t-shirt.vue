@@ -195,7 +195,6 @@ c29.5,0.3,43.6-1.3,47.7,7.4"
 </template>
 
 <style scoped>
-/* SVG styles moved here from inline styles */
 .tshirt-svg .st0 {
   fill: var(--tshirt-color, #94d600);
 }

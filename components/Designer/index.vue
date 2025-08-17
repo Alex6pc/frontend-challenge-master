@@ -45,7 +45,6 @@ async function loadDesignerData() {
 
     // Initialize defaults only if not already set
     if (!designerStore.selectedColor && dataColors.length > 0) {
-      console.log("initializeDefaults");
       designerStore.initializeDefaults();
     }
   } catch (error) {
@@ -59,7 +58,6 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  {{ designerStore.isDataLoaded }}
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     <div class="col-span-1">
       <!-- left column color picker-->

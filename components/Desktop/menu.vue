@@ -24,15 +24,16 @@ const designerStore = useDesignerStore();
             T-Shirt Designer
           </NuxtLink>
         </div>
-        <p class="text-sm text-white">{{ route.path }}</p>
+
+        <!-- Middle section - Total Price (only on home page) -->
+        <div class="flex items-center" v-if="route.path === '/'">
+          <p class="text-lg font-semibold text-white">
+            Total Price: {{ designerStore.totalPrice.toFixed(2) }} €
+          </p>
+        </div>
 
         <!-- Desktop Navigation -->
         <nav class="lg:flex space-x-8">
-          <div class="flex items-center" v-if="route.path === '/'">
-            <p class="text-sm text-white">
-              Total Price: {{ designerStore.totalPrice.toFixed(2) }} €
-            </p>
-          </div>
           <template v-for="item in navItems" :key="item.name">
             <UiButton
               v-if="route.path === item.path && item.onClick"
