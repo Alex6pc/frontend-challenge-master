@@ -7,16 +7,12 @@ const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
 };
 
-onMounted(() => {
-  // Get the dark mode state when component mounts
-});
-
 // Navigation items
 const navItems = [{ name: "T-Shirt Designer", path: "/", icon: "home" }];
 </script>
 
 <template>
-  <div class="min-h-screen bg-neutral-800">
+  <div class="min-h-screen bg-white">
     <DesktopMenu :navItems="navItems" />
 
     <!-- Mobile menu overlay -->

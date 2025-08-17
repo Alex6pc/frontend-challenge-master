@@ -4,6 +4,9 @@ import type { NavItem } from "~/types";
 const { navItems } = defineProps<{
   navItems: NavItem[];
 }>();
+
+// Access route in composition API (auto-imported in Nuxt)
+const route = useRoute();
 </script>
 <template>
   <!-- Top Navigation -->
@@ -27,8 +30,8 @@ const { navItems } = defineProps<{
             :to="item.path"
             class="flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors"
             :class="
-              $route.path === item.path
-                ? 'text- bg-primary bg-opacity-10'
+              route.path === item.path
+                ? 'text-primary bg-secondary bg-opacity-10'
                 : 'text-neutral-700 dark:text-neutral-300 hover:text-primary hover:bg-neutral-100 dark:hover:bg-neutral-700'
             "
           >

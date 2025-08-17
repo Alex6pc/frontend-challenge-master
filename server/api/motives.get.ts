@@ -7,11 +7,11 @@ function generateMotives(count: number) {
        motives.push(
            {
                name: faker.lorem.word(),
-               img: faker.image.url({ width: 100, height:100 }),
+               img: `https://picsum.photos/seed/${faker.string.alphanumeric(10)}/100/100`,
                price: faker.number.float({
                    min: 5,
                    max: 50,
-                   precision: 0.01,
+                  multipleOf: 0.01,
                })
            }
        )

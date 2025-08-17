@@ -6,7 +6,6 @@ defineProps<{
   navItems: NavItem[];
   toggleMobileMenu: () => void;
 }>();
-
 </script>
 <template>
   <!-- Mobile Navigation -->

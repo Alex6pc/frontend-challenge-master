@@ -1,4 +1,5 @@
 :root {
+  /* UI Theme Colors - For interface elements */
   --color-primary: #0F766E;
   --color-primary-light: #14B8A6;
   --color-primary-dark: #0D5A52;
@@ -14,20 +15,61 @@
   --color-neutral: #6B7280;
   --color-neutral-light: #9CA3AF;
   --color-neutral-dark: #4B5563;
+
+  /* T-Shirt Dynamic Color - Set dynamically via JavaScript */
+  --tshirt-color: #ffffff;
 }
 
-/* Custom utility classes */
+/* UI Theme utility classes */
 .bg-primary { background-color: var(--color-primary); }
+.bg-primary-light { background-color: var(--color-primary-light); }
+.bg-primary-dark { background-color: var(--color-primary-dark); }
+
 .bg-secondary { background-color: var(--color-secondary); }
+.bg-secondary-light { background-color: var(--color-secondary-light); }
+.bg-secondary-dark { background-color: var(--color-secondary-dark); }
+
 .bg-accent { background-color: var(--color-accent); }
+.bg-accent-light { background-color: var(--color-accent-light); }
+.bg-accent-dark { background-color: var(--color-accent-dark); }
+
 .bg-neutral { background-color: var(--color-neutral); }
+.bg-neutral-light { background-color: var(--color-neutral-light); }
+.bg-neutral-dark { background-color: var(--color-neutral-dark); }
 
 .text-primary { color: var(--color-primary); }
+.text-primary-light { color: var(--color-primary-light); }
+.text-primary-dark { color: var(--color-primary-dark); }
+
 .text-secondary { color: var(--color-secondary); }
+.text-secondary-light { color: var(--color-secondary-light); }
+.text-secondary-dark { color: var(--color-secondary-dark); }
+
 .text-accent { color: var(--color-accent); }
+.text-accent-light { color: var(--color-accent-light); }
+.text-accent-dark { color: var(--color-accent-dark); }
+
 .text-neutral { color: var(--color-neutral); }
+.text-neutral-light { color: var(--color-neutral-light); }
+.text-neutral-dark { color: var(--color-neutral-dark); }
 
 .border-primary { border-color: var(--color-primary); }
 .border-secondary { border-color: var(--color-secondary); }
 .border-accent { border-color: var(--color-accent); }
-.border-neutral { border-color: var(--color-neutral); } 
+.border-neutral { border-color: var(--color-neutral); }
+
+/* T-Shirt specific classes for dynamic colors from API */
+.tshirt-fill { fill: var(--tshirt-color); }
+.tshirt-bg { background-color: var(--tshirt-color); }
+.tshirt-border { border-color: var(--tshirt-color); }
+
+/* Error state styling for form validation */
+.error-border { border-color: #ef4444; border-width: 2px; }
+.error-text { color: #ef4444; font-size: 0.875rem; }
+
+/* Success state styling */
+.success-text { color: #10b981; }
+.success-bg { background-color: #d1fae5; }
+
+/* Hover transitions */
+.transition-colors { transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; } 
