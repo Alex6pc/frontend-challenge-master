@@ -13,7 +13,7 @@ function generateMotives(count: number) {
                    max: 50,
                   multipleOf: 0.01,
                }) 
-           }
+           } 
        )
     }
 

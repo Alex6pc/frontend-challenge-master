@@ -6,8 +6,6 @@ const designerStore = useDesignerStore();
 
 <template>
   <div>
-    {{ designerStore.selectedColor }}
-    {{ designerStore.selectedMotive }}
     <div class="relative">
       <svg
         version="1.1"

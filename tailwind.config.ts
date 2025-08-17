@@ -1,10 +1,18 @@
 import type {Config} from 'tailwindcss'
-import defaultTheme from 'tailwindcss/defaultTheme'
 
 export default <Partial<Config>>{
     content: [],
     theme: {
-        extend: {},
+        extend: {
+            colors: { 
+                primary: {
+                    DEFAULT: '#0F766E',
+                },
+                secondary: {
+                    DEFAULT: '#F97316',
+                } 
+            }
+        },
     },
     plugins: [],
 }

@@ -4,13 +4,16 @@ import type { Color, Motive } from "~/types";
 
 const designerStore = useDesignerStore();
 
-const colors = ref<Color[]>([]);
-const motives = ref<Motive[]>([]);
+async function loadDesignerData() {
+  if (designerStore.isDataLoaded) {
+    return;
+  }
 
-onBeforeMount(async () => {
   try {
-    const dataColors = await $fetch<Color[]>("/api/colors");
-    const dataMotives = await $fetch<Motive[]>("/api/motives");
+    const [dataColors, dataMotives] = await Promise.all([
+      $fetch<Color[]>("/api/colors"),
+      $fetch<Motive[]>("/api/motives"),
+    ]);
 
     // Replace API fetch with static images
     // const dataMotives: Motive[] = [
@@ -36,24 +39,31 @@ onBeforeMount(async () => {
     //   }
     // ];
 
-    colors.value = dataColors;
-    motives.value = dataMotives;
+    designerStore.colors = dataColors;
+    designerStore.motives = dataMotives;
+    designerStore.isDataLoaded = true;
 
-    designerStore.initializeDefaults(colors.value, motives.value);
-
-    console.log("onMounted dataMotives", motives.value);
+    // Initialize defaults only if not already set
+    if (!designerStore.selectedColor && dataColors.length > 0) {
+      console.log("initializeDefaults");
+      designerStore.initializeDefaults();
+    }
   } catch (error) {
-    console.error("Error fetching colors:", error);
+    console.error("Error fetching designer data:", error);
   }
+}
+
+onBeforeMount(async () => {
+  await loadDesignerData();
 });
 </script>
 
 <template>
-  <!-- grid layout 3 columns responsive -->
+  {{ designerStore.isDataLoaded }}
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     <div class="col-span-1">
       <!-- left column color picker-->
-      <DesignerColorPicker :colors="colors" />
+      <DesignerColorPicker :colors="designerStore.colors" />
     </div>
     <div class="col-span-1">
       <!-- main column t-shirt design-->
@@ -61,7 +71,7 @@ onBeforeMount(async () => {
     </div>
     <div class="col-span-1">
       <!-- right column  motives -->
-      <DesignerMotivePicker :motives="motives" />
+      <DesignerMotivePicker :motives="designerStore.motives" />
     </div>
   </div>
 </template>

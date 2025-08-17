@@ -7,12 +7,18 @@ const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
 };
 
+const { goBack, goToCheckout, goToDesign } = useNavigation();
+
 // Navigation items
-const navItems = [{ name: "T-Shirt Designer", path: "/", icon: "home" }];
+const navItems = [
+  { name: "Checkout", path: "/", icon: "cart-shopping", onClick: goToCheckout },
+  { name: "Back", path: "/about", icon: "arrow-left", onClick: goBack },
+  { name: "Back", path: "/checkout", icon: "arrow-left", onClick: goToDesign },
+];
 </script>
 
 <template>
-  <div class="min-h-screen bg-white">
+  <div class="min-h-screen bg-white flex flex-col">
     <DesktopMenu :navItems="navItems" />
 
     <!-- Mobile menu overlay -->
@@ -27,9 +33,13 @@ const navItems = [{ name: "T-Shirt Designer", path: "/", icon: "home" }];
       :navItems="navItems"
       :toggleMobileMenu="toggleMobileMenu"
     />
-    <!-- Main content -->
-    <main class="container px-4 py-6 mx-auto lg:px-8">
+
+    <!-- Main content - grows to fill space -->
+    <main class="container px-4 py-6 mx-auto lg:px-8 flex-grow">
       <slot />
     </main>
+
+    <!-- Footer -->
+    <DesktopFooterMenu />
   </div>
 </template>

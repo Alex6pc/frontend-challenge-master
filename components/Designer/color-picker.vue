@@ -86,7 +86,7 @@ const setColorAndPartOfTshirt = (color: Color, partOfTshirt: PartOfTshirt) => {
 
     <!-- Price display -->
     <h2 class="font-bold text-xl text-primary">
-      Additional: ${{ designerStore.totalPrice.toFixed(2) || 0 }}
+      Additional: {{ designerStore.totalPrice.toFixed(2) || 0 }} €
     </h2>
     <p class="text-sm text-neutral mt-2">
       The price is calculated based on the selected color of the main part of

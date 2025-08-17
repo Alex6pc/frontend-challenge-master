@@ -39,7 +39,7 @@
 .bg-neutral-light { background-color: var(--color-neutral-light); }
 .bg-neutral-dark { background-color: var(--color-neutral-dark); }
 
-.text-primary { color: var(--color-primary); }
+.text-primary { color: var(--color-primary) !important; }
 .text-primary-light { color: var(--color-primary-light); }
 .text-primary-dark { color: var(--color-primary-dark); }
 

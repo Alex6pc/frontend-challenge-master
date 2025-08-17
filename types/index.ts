@@ -2,6 +2,7 @@ export type NavItem = {
   name: string;
   path: string;
   icon: string;
+  onClick?: () => void;
 }
 
 export type Color = {
@@ -14,6 +15,11 @@ export type Motive = {
   name: string;
   img: string;
   price: number;
+}
+
+export type PersonalData = {
+  name: string;
+  address: string;
 }
 
 export enum PartOfTshirt {
