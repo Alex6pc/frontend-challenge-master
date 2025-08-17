@@ -203,11 +203,11 @@ c29.5,0.3,43.6-1.3,47.7,7.4"
 }
 
 .tshirt-svg .st1 {
-  fill: #5a8c00;
+  fill: var(--tshirt-neck-lining, #5a8c00);
 }
 
 .tshirt-svg .st2 {
-  fill: #82be00;
+  fill: var(--tshirt-wave-patterns, #82be00);
 }
 
 .tshirt-svg .st3 {

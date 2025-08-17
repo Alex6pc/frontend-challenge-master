@@ -1,15 +1,26 @@
 <script setup lang="ts">
 import type { Motive } from "~/types";
+import { useDesignerStore } from "~/stores/designer";
 
-defineProps<{
+const designerStore = useDesignerStore();
+
+const selectedMotive = computed(() => designerStore.selectedMotive);
+
+const props = defineProps<{
   motives: Motive[];
 }>();
 
-const selectedMotive = ref<Motive | null>(null);
-
 const selectMotive = (motive: Motive) => {
-  selectedMotive.value = motive;
+  designerStore.setMotive(motive);
 };
+
+// // Preload images for faster switching
+onMounted(() => {
+  props.motives.forEach((motive: Motive) => {
+    const img = new Image();
+    img.src = motive.img;
+  });
+});
 </script>
 
 <template>

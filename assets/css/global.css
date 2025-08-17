@@ -18,6 +18,8 @@
 
   /* T-Shirt Dynamic Color - Set dynamically via JavaScript */
   --tshirt-color: #ffffff;
+  --tshirt-neck-lining: #ffffff;
+  --tshirt-wave-patterns: #ffffff;
 }
 
 /* UI Theme utility classes */

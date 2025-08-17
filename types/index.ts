@@ -15,3 +15,9 @@ export type Motive = {
   img: string;
   price: number;
 }
+
+export enum PartOfTshirt {
+  Tshirt = 'tshirt',
+  NeckLining = 'neckLining',
+  WavePatterns = 'wavePatterns'
+}

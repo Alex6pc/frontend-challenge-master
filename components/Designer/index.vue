@@ -11,8 +11,33 @@ onBeforeMount(async () => {
   try {
     const dataColors = await $fetch<Color[]>("/api/colors");
     const dataMotives = await $fetch<Motive[]>("/api/motives");
-    colors.value = dataColors || [];
-    motives.value = dataMotives || [];
+
+    // Replace API fetch with static images
+    // const dataMotives: Motive[] = [
+    //   {
+    //     name: "Moon & Tree",
+    //     img: "/images/image1.jpg",
+    //     price: 15.99
+    //   },
+    //   {
+    //     name: "Mountain Sunset",
+    //     img: "/images/image2.jpg",
+    //     price: 18.50
+    //   },
+    //   {
+    //     name: "Autumn Road",
+    //     img: "/images/image3.jpg",
+    //     price: 22.00
+    //   },
+    //   {
+    //     name: "Northern Lights",
+    //     img: "/images/image4.jpg",
+    //     price: 25.99
+    //   }
+    // ];
+
+    colors.value = dataColors;
+    motives.value = dataMotives;
 
     designerStore.initializeDefaults(colors.value, motives.value);
 
