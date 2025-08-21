@@ -1,23 +1,21 @@
 <script setup lang="ts">
 import { PartOfTshirt, type Color } from "~/types";
 import { useDesignerStore } from "~/stores/designer";
+import { storeToRefs } from "pinia";
 
 defineProps<{
   colors: Color[];
 }>();
 
-const designerStore = useDesignerStore();
+const { setColorAndPartOfTshirt } = useDesignerStore();
 
-// take selected color depending on part of tshirt and set the color
-const selectedColor = computed(() =>
-  designerStore.takeSelectedColor(partOfTshirt.value)
-);
-
-const partOfTshirt = computed(() => designerStore.selectedPartOfTshirt);
-
-const setColorAndPartOfTshirt = (color: Color, partOfTshirt: PartOfTshirt) => {
-  designerStore.setColorAndPartOfTshirt(color, partOfTshirt);
-};
+const {
+  totalPrice,
+  selectedPartOfTshirt,
+  selectedColorTshirt,
+  selectedColorNeckLining,
+  selectedColorWavePatterns,
+} = storeToRefs(useDesignerStore());
 </script>
 
 <template>
@@ -28,10 +26,10 @@ const setColorAndPartOfTshirt = (color: Color, partOfTshirt: PartOfTshirt) => {
       <button
         v-for="color in colors"
         :key="color.name"
-        @click="setColorAndPartOfTshirt(color, partOfTshirt)"
+        @click="setColorAndPartOfTshirt(color, selectedPartOfTshirt)"
         class="w-12 h-12 rounded-full border-2 transition-colors"
         :class="
-          selectedColor?.color === color.color
+          selectedColorTshirt?.color === color.color
             ? 'border-8 border-primary'
             : 'border-neutral'
         "
@@ -44,49 +42,51 @@ const setColorAndPartOfTshirt = (color: Color, partOfTshirt: PartOfTshirt) => {
     <div class="flex flex-wrap gap-2 mb-4">
       <UiButton
         :class="
-          partOfTshirt === PartOfTshirt.Tshirt ? 'border-4 border-primary' : ''
+          selectedPartOfTshirt === PartOfTshirt.Tshirt
+            ? 'border-4 border-primary'
+            : ''
         "
         tippy="Select T-Shirt color"
         icon="shirt"
-        :icon-color="designerStore.selectedColorTshirt?.color"
+        :icon-color="selectedColorTshirt?.color"
         variant="secondary"
         size="md"
         type="button"
-        @click="designerStore.selectedPartOfTshirt = PartOfTshirt.Tshirt"
+        @click="selectedPartOfTshirt = PartOfTshirt.Tshirt"
       />
       <UiButton
         :class="
-          partOfTshirt === PartOfTshirt.NeckLining
+          selectedPartOfTshirt === PartOfTshirt.NeckLining
             ? 'border-4 border-primary'
             : ''
         "
         tippy="Select Neck Lining color"
         icon="ring"
-        :icon-color="designerStore.selectedColorNeckLining?.color"
+        :icon-color="selectedColorNeckLining?.color"
         variant="secondary"
         size="md"
         type="button"
-        @click="designerStore.selectedPartOfTshirt = PartOfTshirt.NeckLining"
+        @click="selectedPartOfTshirt = PartOfTshirt.NeckLining"
       />
       <UiButton
         :class="
-          partOfTshirt === PartOfTshirt.WavePatterns
+          selectedPartOfTshirt === PartOfTshirt.WavePatterns
             ? 'border-4 border-primary'
             : ''
         "
         icon="water"
-        :icon-color="designerStore.selectedColorWavePatterns?.color"
+        :icon-color="selectedColorWavePatterns?.color"
         tippy="Select Wave Patterns color"
         variant="secondary"
         size="md"
         type="button"
-        @click="designerStore.selectedPartOfTshirt = PartOfTshirt.WavePatterns"
+        @click="selectedPartOfTshirt = PartOfTshirt.WavePatterns"
       />
     </div>
 
     <!-- Price display -->
     <h2 class="font-bold text-xl text-primary">
-      Additional: {{ designerStore.totalPrice.toFixed(2) || 0 }} €
+      Additional: {{ totalPrice.toFixed(2) || 0 }} €
     </h2>
     <p class="text-sm text-neutral mt-2">
       The price is calculated based on the selected color of the main part of

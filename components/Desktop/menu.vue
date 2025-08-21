@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
 import { useDesignerStore } from "~/stores/designer";
 import type { NavItem } from "~/types";
 
@@ -7,8 +8,14 @@ defineProps<{
 }>();
 
 const route = useRoute();
-const designerStore = useDesignerStore();
+const { totalPrice } = storeToRefs(useDesignerStore());
+
+// Helper function to check if nav item should be shown on current path
+const shouldShowNavItem = (item: NavItem) => {
+  return item.showOnPaths?.includes(route.path) || false;
+};
 </script>
+
 <template>
   <!-- Top Navigation -->
   <header
@@ -27,8 +34,8 @@ const designerStore = useDesignerStore();
 
         <!-- Middle section - Total Price (only on home page) -->
         <div class="flex items-center" v-if="route.path === '/'">
-          <p class="text-lg font-semibold text-white">
-            Total Price: {{ designerStore.totalPrice.toFixed(2) }} €
+          <p class="text-lg font-semibold text-neutral-900 dark:text-white">
+            Total Price: {{ totalPrice.toFixed(2) }} €
           </p>
         </div>
 
@@ -36,15 +43,13 @@ const designerStore = useDesignerStore();
         <nav class="lg:flex space-x-8">
           <template v-for="item in navItems" :key="item.name">
             <UiButton
-              v-if="route.path === item.path && item.onClick"
+              v-if="shouldShowNavItem(item)"
+              :to="item.path"
+              :label="item.name"
+              :icon="item.icon"
               variant="primary"
               size="md"
-              :icon="item.icon"
-              :label="item.name"
-              @click="item.onClick"
             >
-              <Faicon :icon="item.icon" class="mr-2" />
-              {{ item.name }}
             </UiButton>
           </template>
         </nav>

@@ -1,18 +1,14 @@
 <script setup lang="ts">
 import type { Motive } from "~/types";
 import { useDesignerStore } from "~/stores/designer";
+import { storeToRefs } from "pinia";
 
-const designerStore = useDesignerStore();
-
-const selectedMotive = computed(() => designerStore.selectedMotive);
+const { setMotive } = useDesignerStore();
+const { selectedMotive } = storeToRefs(useDesignerStore());
 
 defineProps<{
   motives: Motive[];
 }>();
-
-const selectMotive = (motive: Motive) => {
-  designerStore.setMotive(motive);
-};
 </script>
 
 <template>
@@ -30,7 +26,7 @@ const selectMotive = (motive: Motive) => {
             ? 'border-8 border-primary'
             : 'border-neutral'
         "
-        @click="selectMotive(motive)"
+        @click="setMotive(motive)"
       >
         <img
           :src="motive.img"

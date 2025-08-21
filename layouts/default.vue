@@ -1,16 +1,25 @@
 <script setup lang="ts">
-const { goBack, goToCheckout, goToDesign } = useNavigation();
+import type { NavItem } from "~/types";
 
-// Navigation items
-const navItems = [
-  { name: "Checkout", path: "/", icon: "cart-shopping", onClick: goToCheckout },
-  { name: "Back", path: "/about", icon: "arrow-left", onClick: goBack },
-  { name: "Back", path: "/checkout", icon: "arrow-left", onClick: goToDesign },
+const navItems: NavItem[] = [
+  {
+    name: "Checkout",
+    path: "/checkout",
+    icon: "cart-shopping",
+    showOnPaths: ["/"], // Show checkout button when on homepage
+  },
+  {
+    name: "Back to Design",
+    path: "/",
+    icon: "arrow-left",
+    showOnPaths: ["/checkout", "/about"], // Show back button when on checkout or about
+  },
 ];
 </script>
 
 <template>
   <div class="min-h-screen bg-white flex flex-col">
+    <!-- Header-->
     <DesktopMenu :navItems="navItems" />
 
     <!-- Content - grows to fill space -->

@@ -3,17 +3,24 @@ import type { Color, Motive } from '~/types'
 import { PartOfTshirt } from '~/types'
 
 export const useDesignerStore = defineStore('designer', () => {
-  // API data state
-  const colors = ref<Color[]>([])
-  const motives = ref<Motive[]>([])
-  const isDataLoaded = ref(false)
+  // API data fetching with useFetch
+  const { data: colors, pending: colorsPending } = useFetch<Color[]>('/api/colors', {
+    key: 'api/colors'
+  })
+  
+  const { data: motives, pending: motivesPending } = useFetch<Motive[]>('/api/motives', {
+    key: 'api/motives'
+  })
+
+  // Combined loading state
+  const isDataLoaded = computed(() => Boolean(!colorsPending.value && !motivesPending.value))
 
   // design state
   const selectedColor = ref<Color>()
   const selectedColorTshirt = ref<Color>()
   const selectedColorNeckLining = ref<Color>()
   const selectedColorWavePatterns = ref<Color>()
-  const selectedMotive = ref<Motive | null>(null)
+  const selectedMotive = ref<Motive | undefined>(undefined)
   const selectedPartOfTshirt = ref<PartOfTshirt>(PartOfTshirt.Tshirt)
   // getters
   const totalPrice = computed(() => {
@@ -24,38 +31,35 @@ export const useDesignerStore = defineStore('designer', () => {
   })
 
   const takeSelectedColor = (partOfTshirt: PartOfTshirt) => {
-    if (partOfTshirt === PartOfTshirt.Tshirt) {
-      return selectedColorTshirt.value
-    } else if (partOfTshirt === PartOfTshirt.NeckLining) {
-      return selectedColorNeckLining.value
-    } else if (partOfTshirt === PartOfTshirt.WavePatterns) {
-      return selectedColorWavePatterns.value
+
+    switch (partOfTshirt) {
+      case PartOfTshirt.Tshirt:
+        return selectedColorTshirt.value
+      case PartOfTshirt.NeckLining:
+        return selectedColorNeckLining.value
+      case PartOfTshirt.WavePatterns:
+        return selectedColorWavePatterns.value
     }
   }
 
   // setters
   const setColorAndPartOfTshirt = (color: Color, partOfTshirt: PartOfTshirt) => {
-  
     selectedPartOfTshirt.value = partOfTshirt
 
     // switch case for t-shirt color
     switch (partOfTshirt) {
       case PartOfTshirt.Tshirt:
         selectedColorTshirt.value = color
-        document.documentElement.style.setProperty('--tshirt-color', color.color)
-
         // we use it for the price calculation in the totalPrice getter
         selectedColor.value = color
         break
         
       case PartOfTshirt.NeckLining:
         selectedColorNeckLining.value = color
-        document.documentElement.style.setProperty('--tshirt-neck-lining', color.color)
         break
         
       case PartOfTshirt.WavePatterns:
         selectedColorWavePatterns.value = color
-        document.documentElement.style.setProperty('--tshirt-wave-patterns', color.color)
         break
     }
   }
@@ -66,23 +70,18 @@ export const useDesignerStore = defineStore('designer', () => {
 
 
   const initializeDefaults = () => {
-    if (colors.value.length === 0 || motives.value.length === 0) {
+    if (!colors.value?.length || !motives.value?.length) {
       return
     }
-
     selectedColor.value = colors.value[0]
     selectedColorTshirt.value = colors.value[0]
     selectedColorNeckLining.value = colors.value[0]
     selectedColorWavePatterns.value = colors.value[0]
     selectedMotive.value = motives.value[0]
     selectedPartOfTshirt.value = PartOfTshirt.Tshirt
-
-    document.documentElement.style.setProperty('--tshirt-color', selectedColor.value?.color || '')
-    document.documentElement.style.setProperty('--tshirt-neck-lining', selectedColorNeckLining.value?.color || '')
-    document.documentElement.style.setProperty('--tshirt-wave-patterns', selectedColorWavePatterns.value?.color || '')
   }
 
-  const resetDesign = () => {
+  const resetToDefault = () => {
     initializeDefaults()
   }
 
@@ -91,7 +90,7 @@ export const useDesignerStore = defineStore('designer', () => {
     colors, 
     motives, 
     isDataLoaded, 
-    resetDesign,
+    resetToDefault,
     // design state
     selectedColor, 
     selectedMotive, 

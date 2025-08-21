@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { useDesignerStore } from "~/stores/designer";
-
-const designerStore = useDesignerStore();
 </script>
 
 <template>
@@ -14,7 +12,8 @@ const designerStore = useDesignerStore();
         <div class="flex justify-between items-center">
           <span class="text-gray-700">Motiv:</span>
           <span class="font-medium">
-            {{ (designerStore.selectedMotive?.price || 4.36).toFixed(2) }} €
+            {{ (useDesignerStore().selectedMotive?.price || 0).toFixed(2) }}
+            €
           </span>
         </div>
 
@@ -22,7 +21,8 @@ const designerStore = useDesignerStore();
         <div class="flex justify-between items-center">
           <span class="text-gray-700">Shirt:</span>
           <span class="font-medium">
-            {{ (designerStore.selectedColor?.price || 11.09).toFixed(2) }} €
+            {{ (useDesignerStore().selectedColor?.price || 0).toFixed(2) }}
+            €
           </span>
         </div>
 
@@ -33,7 +33,7 @@ const designerStore = useDesignerStore();
         <div class="flex justify-between items-center text-lg font-bold">
           <span class="text-gray-900">Total:</span>
           <span class="text-gray-900">
-            {{ designerStore.totalPrice.toFixed(2) }} €
+            {{ useDesignerStore().totalPrice.toFixed(2) }} €
           </span>
         </div>
       </div>

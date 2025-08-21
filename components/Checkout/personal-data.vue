@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useNavigation } from "~/composables/useNavigation";
 import type { PersonalData } from "~/types";
 
-const { goToOrderSuccess } = useNavigation();
+const router = useRouter();
 
 const personalData = ref<PersonalData>({
   name: "",
@@ -29,13 +28,15 @@ const submitOrder = async () => {
     });
 
     if (response.success) {
-      goToOrderSuccess();
+      router.push("/order-success");
     }
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Order submission failed:", error);
 
-    if (error.data) {
-      errors.value = error.data.errors;
+    if (error && typeof error === "object" && "data" in error && error.data) {
+      errors.value = (
+        error.data as { errors: { name?: string[]; address?: string[] } }
+      ).errors;
     } else {
       errors.value = {
         name: ["An unexpected error occurred. Please try again."],

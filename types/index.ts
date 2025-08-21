@@ -2,7 +2,7 @@ export type NavItem = {
   name: string;
   path: string;
   icon: string;
-  onClick?: () => void;
+  showOnPaths: string[];
 }
 
 export type Color = {
