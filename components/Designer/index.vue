@@ -1,20 +1,18 @@
 <script setup lang="ts">
 import { useDesignerStore } from "~/stores/designer";
 
-const designerStore = useDesignerStore();
-
 // Initialize only once
 onMounted(() => {
-  if (designerStore.isDataLoaded && !designerStore.selectedColor) {
-    designerStore.initializeDefaults();
+  if (useDesignerStore().isDataLoaded && !useDesignerStore().selectedColor) {
+    useDesignerStore().initializeDefaults();
   }
 });
 
 const designerData = computed(() => {
   return {
-    isLoaded: designerStore.isDataLoaded,
-    colors: designerStore.colors || [],
-    motives: designerStore.motives || [],
+    isLoaded: useDesignerStore().isDataLoaded,
+    colors: useDesignerStore().colors || [],
+    motives: useDesignerStore().motives || [],
   };
 });
 </script>
