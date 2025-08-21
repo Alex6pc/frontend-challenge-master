@@ -10,7 +10,6 @@ onMounted(() => {
 
 const designerData = computed(() => {
   return {
-    isLoaded: useDesignerStore().isDataLoaded,
     colors: useDesignerStore().colors || [],
     motives: useDesignerStore().motives || [],
   };
